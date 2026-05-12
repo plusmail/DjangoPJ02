@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+{% block head_title %} 게시물 등록 {% endblock %}
+
+{% block main_area %}
+    <h1>새로운 게시물 등록</h1>
+    <hr/>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <div id="idv_id_tags_str">
+            <label for="id_tags_str">Tags:</label>
+            <input type="text" name="tags_str"
+                   class="textinput textInput form-control"
+                   id="id_tags_str">
+        </div>
+        <button type="submit" class="btn btn-primary float-end m-3">등록</button>
+
+    </form>
+
+    {{ form.media }}
+
+
+{% endblock %}
