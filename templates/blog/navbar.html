@@ -1,3 +1,4 @@
+{% load socialaccount %}
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
@@ -40,12 +41,30 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#"
-                       data-bs-toggle="modal"
-                       data-bs-target="#loginModal"
-                    >Log In</a>
-                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#"
+                           id="navbarDropdownMenuLink"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false"
+                        >{{ user.username }}</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarNavDropdown">
+                            <a href="/accounts/logout" class="dropdown-item">
+                                로그아웃
+                            </a>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a href="#" class="nav-link"
+                           data-bs-toggle="modal"
+                           data-bs-target="#loginModal">
+                            로그인
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>
@@ -69,29 +88,38 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    {#                    col-md-6 #}
-                    {#                    column(열), md(화면크기 768px이상, 전체가 50%, 12칸 중 6칸#}
                     <div class="col-md-6">
-                        <button class="btn btn-outline-dark btn-block btn-sm">
-                            <i class="fab fa-google">&nbsp;&nbsp;Login in with Google</i>
-                        </button>
-                        <button class="btn btn-outline-dark btn-block btn-sm">
-                            <i class="fab fa-envelope">&nbsp;&nbsp;Login in with E-mail</i>
-                        </button>
+                        <a role="button"
+                           class="btn btn-outline-dark btn-block btn-sm"
+                           href="{% provider_login_url 'google' %}">
+                            <i class=" fab fa-google"></i>
+                            구글 로그인
+                        </a>
+                        <a role="button"
+                           class="btn btn-outline-dark btn-block btn-sm"
+                           href="/accounts/login">
+                            <i class="far fa-envelope"></i>
+                            E-mail 로그인
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a role="button"
+                           class="btn btn-outline-dark btn-block btn-sm"
+                           href="/accounts/signup">
+                            <i class="far fa-envelope"></i>
+                            회원가입
+                        </a>
+                    </div>
 
-                    </div>
-                    <div class="col-md-6">
-                        <button class="btn btn-outline-dark btn-block btn-sm">
-                            <i class="fab fa-envelope">&nbsp;&nbsp;Sign up with E-mail</i>
-                        </button>
-                    </div>
+
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-
         </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+
     </div>
+</div>
 
 </div>

@@ -1,13 +1,13 @@
 from django.shortcuts import render
-
+from blog.models import Post
 # Create your views here.
 
 
 def landing(request):
-    return render(
-        request,
-        'single_pages/landing.html'
-    )
+    recent_posts = Post.objects.order_by('-created_at')[:3]  # 최근 3개
+    return render(request, 'single_pages/landing.html', {
+        'recent_posts': recent_posts,
+    })
 
 
 def about_me(request):
